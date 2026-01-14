@@ -27,7 +27,7 @@ Before reviewing any technical details, ask:
 - Will users notice this consciously? (If yes for production UI, probably too much)
 - Does this feel natural after the 10th interaction?
 - Is the easing appropriate for the brand/context?
-- Is it fast enough? (UI animations should be under 300ms)
+- Is the duration appropriate? (Emil: under 300ms for productivity tools; others may vary)
 
 ### 2. Technical Review
 Use the supporting files for detailed guidance:

@@ -44,10 +44,11 @@
 ## General Motion Design Mistakes
 
 - **Animating layout-triggering properties** (width, height, top, left) — Use transform instead
-- **Animations longer than 300ms for interactions** — Feels sluggish
 - **No animation at all** — Instant state changes feel broken to modern users
 - **Same duration for all animations** — Smaller elements should animate faster
 - **Forgetting `prefers-reduced-motion`** — Not optional
+
+*Note: Duration is designer-dependent. Emil prefers under 300ms for productivity tools. Jakub and Jhey may use longer durations when polish or effect warrants it.*
 
 ---
 
@@ -102,10 +103,10 @@ animate={{ scale: 1, opacity: 1 }}
 ```
 
 ```jsx
-// BAD: Slow animation duration (Emil)
+// Per Emil: Too slow for productivity UI
 transition={{ duration: 0.4 }}
 
-// GOOD: Fast, snappy animation
+// Per Emil: Fast, snappy (but Jakub/Jhey might use 0.4 for polish)
 transition={{ duration: 0.18 }}
 ```
 

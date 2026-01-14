@@ -18,7 +18,7 @@ Emil Kowalski's defining contribution is knowing **when NOT to animate**.
 - **Frequent interactions** (100s/day): Minimal or no animation
 - **Keyboard-initiated actions**: Never animate
 
-**Speed is Non-Negotiable**: UI animations should stay under 300ms. A 180ms animation feels more responsive than 400ms. When in doubt, go faster.
+**Emil's Speed Rule**: For high-frequency UI, animations should stay under 300ms (180ms feels ideal). When in doubt, go faster. *Note: This is Emil's guideline for productivity tools—Jakub and Jhey may use longer durations for polish or experimentation.*
 
 **When to apply Emil's mindset**:
 - High-frequency productivity tools (like Raycast, Linear)
@@ -96,6 +96,7 @@ This captures the essence of production-quality motion design. Effective motion:
 |----------|------|-------|------|
 | **Primary concern** | "Should this animate at all?" | "Is this subtle enough?" | "What could this become?" |
 | **Success metric** | Frictionless workflow | Invisible polish | Joy and learning |
+| **Duration preference** | Under 300ms (180ms ideal) | "Whatever feels right" (often 200-400ms) | Varies widely by effect |
 | **Signature technique** | Frequency-based decisions | Blur + opacity + translateY | CSS custom properties |
 | **Ideal context** | High-frequency tools | Production polish | Learning & exploration |
 

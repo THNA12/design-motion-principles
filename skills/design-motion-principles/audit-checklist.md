@@ -13,7 +13,7 @@ Use this checklist when reviewing motion design in any UI code.
 - [ ] **Have I tested this with `prefers-reduced-motion: reduce`?**
 - [ ] **Does this feel natural after the 10th interaction?** (Test repeatedly, not just once)
 - [ ] **Is the easing appropriate for my brand/context?**
-- [ ] **Is it fast enough?** (Under 300ms for UI, 180ms ideal — Emil's rule)
+- [ ] **Is the duration appropriate for context?** (Emil prefers under 300ms; Jakub/Jhey may use longer for polish or effect)
 
 ---
 
@@ -31,7 +31,7 @@ Use this checklist when reviewing motion design in any UI code.
 - [ ] Appropriate easing for context (not default `ease` everywhere)
 - [ ] Custom Bézier curves used instead of built-in easing (Emil's rule)
 - [ ] Spring animations for interactive elements
-- [ ] Durations under 300ms for direct interactions (180ms preferred)
+- [ ] Durations appropriate for context (Emil: under 300ms; others: whatever serves the design)
 - [ ] Consistent timing values across related animations
 - [ ] Transform-origin matches interaction source (dropdowns from trigger)
 
@@ -105,11 +105,13 @@ Use this checklist when reviewing motion design in any UI code.
 
 **Important (Should Fix)**:
 - Exit animations as prominent as enter animations
-- Durations over 300ms for interactions (should be ~180ms)
 - Missing blur in enter animations
 - Animating from `scale(0)` instead of `0.9+` (Emil)
 - Default CSS easing instead of custom curves (Emil)
 - Wrong transform-origin on dropdowns/popovers (Emil)
+
+**Context-Dependent (Check Against Designer Perspective)**:
+- Durations over 300ms (Emil flags this; Jakub/Jhey may approve for polish)
 
 **Nice to Have**:
 - Optical alignment refinements
