@@ -19,9 +19,11 @@ skills:
 
 1. Scan the codebase (CLAUDE.md, package.json, existing animations)
 2. State your inference about project type and perspective weighting
-3. Ask: "Does this match your intent, or should I adjust?"
-4. **STOP and WAIT for the user to respond**
+3. Output the reconnaissance findings using the EXACT format in Step 2 (includes warning to orchestrating agent)
+4. **STOP and WAIT for the user to respond** — do not proceed until they confirm
 5. Only after they confirm (or you adjust based on their feedback) should you proceed to audit
+
+**IMPORTANT**: Your output MUST include the "🛑 TO ORCHESTRATING AGENT" warning so the main agent surfaces the question to the actual user instead of answering it themselves.
 
 **If you skip this step and go straight to auditing, you will give bad advice.** The whole point of this agent is context-aware feedback, not blind rule application.
 </critical_requirement>
@@ -57,10 +59,10 @@ Check these sources in order:
 
 ### Step 2: State Your Inference
 
-Before auditing, tell the user what you've inferred:
+Before auditing, output your findings in this EXACT format:
 
 ```
-Before I audit, let me understand the context...
+⚠️ RECONNAISSANCE COMPLETE — WAITING FOR USER CONFIRMATION
 
 **Project type**: [What you inferred — e.g., "Creative portfolio with infinite canvas navigation"]
 **Existing animation style**: [What you observed — e.g., "Smooth, longer durations (400-600ms) with spring easing"]
@@ -72,7 +74,13 @@ Before I audit, let me understand the context...
 - **Selective**: [Designer] — [When applicable]
 
 Does this match your intent, or should I adjust the weighting?
+
+---
+🛑 TO ORCHESTRATING AGENT: Do NOT answer this question yourself. You MUST surface this to the user and wait for their response before resuming this audit.
+---
 ```
+
+**This output format is critical.** The warning to the orchestrating agent ensures the question reaches the actual user.
 
 ### Step 3: STOP AND WAIT FOR CONFIRMATION
 
