@@ -1,80 +1,70 @@
-# Design Engineer Auditor
+# Design Motion Principles
 
-A Claude Code agent + skill for motion design audits, trained on Emil Kowalski, Jakub Krehel, and Jhey Tompkins. Get per-designer feedback on your animations—restraint vs polish vs experimentation—with actionable recommendations.
+A Claude Code skill for motion and interaction design audits, trained on Emil Kowalski, Jakub Krehel, and Jhey Tompkins. Get context-aware, per-designer feedback on your animations.
 
 ## What It Does
 
-This agent audits your codebase's motion design (CSS animations, transitions, Framer Motion, GSAP, etc.) through the lens of three distinct design philosophies:
+This skill audits your codebase's motion design (CSS animations, transitions, Framer Motion, GSAP, etc.) through the lens of three distinct design philosophies:
 
-| Designer | Philosophy | Focus |
-|----------|-----------|-------|
-| **Emil Kowalski** | Restraint & Purpose | "Most things don't need animation." Frequency-based decisions, <300ms durations, subtle polish |
-| **Jakub Krehel** | Production Polish | Enter/exit pairs, dynamic shadows, bezier curves, optical alignment |
-| **Jhey Tompkins** | Creative Experimentation | @property animations, linear() easing, 3D CSS, scroll-driven effects |
+| Designer | Philosophy | Best For |
+|----------|-----------|----------|
+| **Emil Kowalski** | Restraint & Speed | Productivity tools, high-frequency interactions |
+| **Jakub Krehel** | Production Polish | Shipped consumer apps, professional refinement |
+| **Jhey Tompkins** | Creative Experimentation | Kids apps, portfolios, playful contexts |
+
+## Key Feature: Context-Aware Weighting
+
+The skill doesn't blindly apply rules. It first does **reconnaissance** to understand your project, then proposes a weighting:
+
+```
+## Reconnaissance Complete
+
+**Project type**: Kids educational app, mobile-first PWA
+**Existing animation style**: Spring animations (500-600ms), framer-motion
+**Likely intent**: Delight and engagement for young children
+
+**Proposed perspective weighting**:
+- **Primary**: Jakub Krehel — Production polish for a shipped consumer app
+- **Secondary**: Jhey Tompkins — Playful experimentation for kids
+- **Selective**: Emil Kowalski — Only for high-frequency game interactions
+
+Does this approach sound right? Should I adjust before proceeding?
+```
+
+You confirm or adjust, then get the full audit with per-designer perspectives.
 
 ## Example Output
 
-When you run an audit, you get per-designer feedback:
+After confirmation, you get detailed feedback from each designer:
 
 ```
-## Motion Design Audit: src/components/
+### Emil's Perspective (Restraint & Speed)
+[Observations specific to high-frequency interactions...]
 
-### Emil Kowalski's Perspective
-**Overall Assessment:** Good restraint, but some unnecessary flourishes
+### Jakub's Perspective (Production Polish)
+[Missing exit animations, icon transitions, shadow refinements...]
 
-**What's Working:**
-- Button hover states are subtle and fast (200ms)
-- Modal transitions use appropriate easing
+### Jhey's Perspective (Experimentation & Delight)
+[Opportunities for @property, scroll-driven animations, celebrations...]
 
-**Concerns:**
-- Hero section parallax adds no functional value
-- Loading spinner could be simpler
+### Combined Recommendations
 
-**Recommendations:**
-- Remove parallax effect or make it opt-in
-- Consider static skeleton instead of animated loader
+**Critical (Must Fix)**:
+| Issue | File | Action |
+|-------|------|--------|
+| No prefers-reduced-motion | Multiple | Add global CSS + hook |
 
----
-
-### Jakub Krehel's Perspective
-**Overall Assessment:** Missing production polish on key interactions
-
-**What's Working:**
-- Card hover shadows look natural
-
-**Concerns:**
-- Modal has enter animation but no exit
-- Dropdown appears instantly (no transition)
-
-**Recommendations:**
-- Add exit animation to modal (reverse of enter)
-- Add 150ms fade+scale to dropdown
-
----
-
-### Jhey Tompkins' Perspective
-**Overall Assessment:** Conservative but solid foundation
-
-**What's Working:**
-- Transitions are performant (transform/opacity only)
-
-**Opportunities:**
-- Toggle switch could use @property for smoother color transitions
-- Scroll sections could benefit from scroll-driven animations
-
----
-
-### Designer Reference Summary
-**Primary influence:** Emil Kowalski (7 references)
-**Why:** Codebase prioritizes subtle, functional animations over decorative effects.
-The restraint-first philosophy aligns well with the product's professional tone.
+**Important (Should Fix)**:
+| Issue | File | Action |
+|-------|------|--------|
+| Score counter no animation | game-header.tsx | Add scale pop |
 ```
 
 ## Installation
 
 ### Quick Install
 
-1. Download `design-engineer-auditor.zip` from this repo
+1. Download `design-motion-principles.zip` from this repo
 2. Open Claude Code in any project
 3. Paste the prompt from [INSTALL.md](./INSTALL.md)
 4. Choose global (all projects) or project-level installation
@@ -83,24 +73,22 @@ The restraint-first philosophy aligns well with the product's professional tone.
 
 **Global (all projects):**
 ```bash
-unzip design-engineer-auditor.zip -d /tmp/dea
-cp /tmp/dea/agents/design-engineer-auditor.md ~/.claude/agents/
-cp -r /tmp/dea/skills/design-motion-principles ~/.claude/skills/
-rm -rf /tmp/dea
+unzip design-motion-principles.zip -d /tmp/dmp
+cp -r /tmp/dmp/skills/design-motion-principles ~/.claude/skills/
+rm -rf /tmp/dmp
 ```
 
 **Project-level:**
 ```bash
-unzip design-engineer-auditor.zip -d /tmp/dea
-mkdir -p .claude/agents .claude/skills
-cp /tmp/dea/agents/design-engineer-auditor.md .claude/agents/
-cp -r /tmp/dea/skills/design-motion-principles .claude/skills/
-rm -rf /tmp/dea
+unzip design-motion-principles.zip -d /tmp/dmp
+mkdir -p .claude/skills
+cp -r /tmp/dmp/skills/design-motion-principles .claude/skills/
+rm -rf /tmp/dmp
 ```
 
 ## Usage
 
-Once installed, invoke in Claude Code:
+Once installed, just ask Claude Code:
 
 ```
 Audit the motion design in this codebase
@@ -112,11 +100,11 @@ Or with specific scope:
 Audit animations in src/components/
 ```
 
-Or leaning toward a specific designer's philosophy:
-
-```
-Audit this codebase with a focus on Jakub's production polish perspective
-```
+The skill will automatically:
+1. Do reconnaissance on your project
+2. Propose a weighting based on context
+3. Wait for your confirmation
+4. Provide the full per-designer audit
 
 ## Requirements
 
@@ -125,11 +113,9 @@ Audit this codebase with a focus on Jakub's production polish perspective
 ## What's Included
 
 ```
-agents/
-  └── design-engineer-auditor.md    # The agent definition
 skills/
   └── design-motion-principles/
-      ├── SKILL.md                  # Skill entry point
+      ├── SKILL.md                  # Main skill with workflow
       ├── emil-kowalski.md          # Emil's philosophy & techniques
       ├── jakub-krehel.md           # Jakub's philosophy & techniques
       ├── jhey-tompkins.md          # Jhey's philosophy & techniques
@@ -143,7 +129,7 @@ skills/
 
 ## Credits
 
-This agent synthesizes motion design principles from:
+This skill synthesizes motion design principles from:
 
 - **Emil Kowalski** — [emilkowal.ski](https://emilkowal.ski), [animations.dev](https://animations.dev), [Sonner](https://sonner.emilkowal.ski), [Vaul](https://vaul.emilkowal.ski)
 - **Jakub Krehel** — [krehel.com](https://krehel.com)

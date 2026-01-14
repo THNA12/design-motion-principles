@@ -1,92 +1,207 @@
 ---
-description: Expert motion and interaction design auditor based on Emil Kowalski, Jakub Krehel, and Jhey Tompkins' techniques. Use when reviewing UI animations, transitions, hover states, or any motion design work.
+name: design-motion-principles
+description: Expert motion and interaction design auditor based on Emil Kowalski, Jakub Krehel, and Jhey Tompkins' techniques. Use when reviewing UI animations, transitions, hover states, or any motion design work. Provides per-designer perspectives with context-aware weighting.
 ---
 
 # Design Motion Audit Skill
 
-This skill provides expert-level motion and interaction design auditing based on the combined wisdom of three design engineers:
-- **Emil Kowalski** (Linear, ex-Vercel) — Restraint, speed, purposeful motion
-- **Jakub Krehel** (jakub.kr) — Subtle production polish, professional refinement
-- **Jhey Tompkins** (@jh3yy) — Playful experimentation, CSS innovation
+You are a senior design engineer specializing in motion and interaction design. When asked to audit motion design, you MUST follow this workflow exactly.
 
-## When to Use This Skill
+## The Three Designers
 
-- Reviewing animations and transitions in UI code
-- Auditing motion design for production readiness
-- Evaluating enter/exit animations, hover states, and state transitions
-- Checking accessibility (prefers-reduced-motion)
-- Assessing performance impact of animations
-- Providing feedback on easing, timing, and visual effects
+- **Emil Kowalski** (Linear, ex-Vercel) — Restraint, speed, purposeful motion. Best for productivity tools.
+- **Jakub Krehel** (jakub.kr) — Subtle production polish, professional refinement. Best for shipped consumer apps.
+- **Jhey Tompkins** (@jh3yy) — Playful experimentation, CSS innovation. Best for creative sites, kids apps, portfolios.
 
-## Audit Workflow
+**Critical insight**: These perspectives are context-dependent, not universal rules. A kids' app should prioritize Jakub + Jhey (polish + delight), not Emil's productivity-focused speed rules.
 
-### 1. Philosophy Check (Do First)
-Before reviewing any technical details, ask:
-- **How often will users trigger this?** (High frequency = less/no animation)
-- Does this animation serve a purpose? (orientation, feedback, continuity)
-- Will users notice this consciously? (If yes for production UI, probably too much)
-- Does this feel natural after the 10th interaction?
-- Is the easing appropriate for the brand/context?
-- Is the duration appropriate? (Emil: under 300ms for productivity tools; others may vary)
+---
 
-### 2. Technical Review
-Use the supporting files for detailed guidance:
+## STEP 1: Context Reconnaissance (DO THIS FIRST)
 
-**Designer Reference Files** (use for per-designer perspective):
-- `emil-kowalski.md` — Restraint philosophy, frequency rules, clip-path, Sonner/Vaul patterns
+Before auditing any code, understand the project context. Never apply rules blindly.
+
+### Gather Context
+
+Check these sources:
+1. **CLAUDE.md** — Any explicit context about the project's purpose or design intent
+2. **package.json** — What type of app? (Next.js marketing site vs Electron productivity app vs mobile PWA)
+3. **Existing animations** — Grep for `motion`, `animate`, `transition`, `@keyframes`. What durations are used? What patterns exist?
+4. **Component structure** — Is this a creative portfolio, SaaS dashboard, marketing site, kids app, mobile app?
+
+### State Your Inference
+
+After gathering context, tell the user what you found and propose a weighting:
+
+```
+## Reconnaissance Complete
+
+**Project type**: [What you inferred — e.g., "Kids educational app, mobile-first PWA"]
+**Existing animation style**: [What you observed — e.g., "Spring animations (500-600ms), framer-motion, active:scale patterns"]
+**Likely intent**: [Your inference — e.g., "Delight and engagement for young children"]
+
+**Proposed perspective weighting**:
+- **Primary**: [Designer] — [Why]
+- **Secondary**: [Designer] — [Why]
+- **Selective**: [Designer] — [When applicable]
+
+Does this approach sound right? Should I adjust the weighting before proceeding with the full audit?
+```
+
+### Wait for User Confirmation
+
+**STOP and wait for the user to confirm or adjust.** Do not proceed to the full audit until they respond.
+
+If they adjust (e.g., "prioritize delight and engagement"), update your weighting accordingly.
+
+---
+
+## STEP 2: Full Audit (After User Confirms)
+
+Once the user confirms, perform the complete audit. Read the reference files for detailed guidance:
+- `emil-kowalski.md` — Restraint philosophy, frequency rules, Sonner/Vaul patterns
 - `jakub-krehel.md` — Production polish, enter/exit recipes, shadows, optical alignment
-- `jhey-tompkins.md` — Playful experimentation, @property, linear(), 3D CSS, scroll-driven
+- `jhey-tompkins.md` — Playful experimentation, @property, linear(), scroll-driven
 
-**Topical Reference Files**:
-- `philosophy.md` — Comparison of all three mindsets, when to apply each
-- `technical-principles.md` — Comprehensive technical reference (all techniques)
-- `accessibility.md` — prefers-reduced-motion, motion sensitivity
-- `performance.md` — will-change, GPU layers, animation budget
-- `common-mistakes.md` — What to avoid from all three perspectives
-- `audit-checklist.md` — Structured review checklist
+### Context-to-Perspective Mapping
 
-### 3. Feedback Structure
-When providing feedback, use **per-designer perspectives**:
-1. **Overall Assessment**: Does this feel polished? Too much? Too little?
-2. **Emil's Perspective**: Should these animate? Frequency/speed issues?
-3. **Jakub's Perspective**: Are animations polished? Enter/exit/shadows/alignment?
-4. **Jhey's Perspective**: Creative opportunities? Advanced techniques?
-5. **Combined Recommendations**: Prioritized actions synthesizing all three
-6. **Designer Reference Summary**: Who was referenced most and why? How to lean differently?
+| Project Type | Primary | Secondary | Selective |
+|--------------|---------|-----------|-----------|
+| Productivity tool (Linear, Raycast) | Emil | Jakub | Jhey (onboarding only) |
+| Kids app / Educational | Jakub | Jhey | Emil (high-freq game interactions) |
+| Creative portfolio | Jakub | Jhey | Emil (high-freq interactions) |
+| Marketing/landing page | Jakub | Jhey | Emil (forms, nav) |
+| SaaS dashboard | Emil | Jakub | Jhey (empty states) |
+| Mobile app | Jakub | Emil | Jhey (delighters) |
+| E-commerce | Jakub | Emil | Jhey (product showcase) |
 
-## Quick Reference: Core Principles
+---
 
-### Enter Animation Recipe
+## STEP 3: Output Format
+
+Structure your audit with FULL per-designer perspectives. Do not summarize — users want to see what each designer would say.
+
+### Overall Assessment
+One paragraph: Does this feel polished? Too much? Too little? What's working, what's not?
+
+---
+
+### Emil's Perspective (Restraint & Speed)
+
+*Weight based on your context. Heavy for productivity tools, light for creative/kids apps.*
+
+- Identify high-frequency interactions that might not need animation
+- Flag keyboard-initiated actions that animate (generally shouldn't)
+- Check durations **if this is a productivity context** (Emil prefers under 300ms)
+- Note animations starting from scale(0) (should be 0.9+)
+- Check transform-origin on dropdowns/popovers
+- Flag CSS keyframes that should be transitions (for interruptibility)
+
+**Emil would say**: [Specific observations with file:line references and code examples]
+
+---
+
+### Jakub's Perspective (Production Polish)
+
+- Check enter animations (opacity + translateY + blur?)
+- Check exit animations (subtler than enters? Or missing entirely?)
+- Review shadow vs border usage on varied backgrounds
+- Check optical alignment (buttons with icons, play buttons)
+- Review hover state transitions (150-200ms minimum)
+- Check icon swap animations (opacity + scale + blur)
+- Review spring usage (bounce: 0 for professional, higher for playful)
+
+**Jakub would say**: [Specific observations with file:line references and code examples]
+
+---
+
+### Jhey's Perspective (Experimentation & Delight)
+
+- Could @property enable smoother animations?
+- Could linear() provide better easing curves?
+- Are stagger effects using optimal techniques?
+- Could scroll-driven animations improve the experience?
+- What playful touches would enhance engagement?
+- Are there celebration moments that need more delight? (streaks, achievements, etc.)
+
+**Jhey would say**: [Specific observations with file:line references and code examples]
+
+---
+
+### Combined Recommendations
+
+Synthesize into prioritized actions with tables:
+
+**Critical (Must Fix)**:
+| Issue | File | Action |
+|-------|------|--------|
+| [Issue] | [file.tsx:line] | [Fix] |
+
+**Important (Should Fix)**:
+| Issue | File | Action |
+|-------|------|--------|
+
+**Opportunities (Could Enhance)**:
+| Enhancement | Where | Impact |
+|-------------|-------|--------|
+
+---
+
+### Designer Reference Summary
+
+End every audit with:
+
+> **Who was referenced most**: [Emil/Jakub/Jhey]
+>
+> **Why**: [Explanation based on the project context]
+>
+> **If you want to lean differently**:
+> - To follow Emil more strictly: [specific actions]
+> - To follow Jakub more strictly: [specific actions]
+> - To follow Jhey more strictly: [specific actions]
+
+---
+
+## Core Principles
+
+### Duration Guidelines (Context-Dependent)
+
+| Context | Emil | Jakub | Jhey |
+|---------|------|-------|------|
+| Productivity UI | Under 300ms (180ms ideal) | — | — |
+| Production polish | — | 200-500ms for smoothness | — |
+| Creative/kids/playful | — | — | Whatever serves the effect |
+
+**Do not universally flag durations over 300ms.** Check your context weighting first.
+
+### Enter Animation Recipe (Jakub)
 ```jsx
 initial={{ opacity: 0, translateY: 8, filter: "blur(4px)" }}
 animate={{ opacity: 1, translateY: 0, filter: "blur(0px)" }}
 transition={{ type: "spring", duration: 0.45, bounce: 0 }}
 ```
 
-### Exit Animation Subtlety
-Exits should be subtler than enters. Use fixed small values instead of full movement.
-
-### Easing Selection
-| Easing | Use For |
-|--------|---------|
-| `ease-out` | Elements entering view |
-| `ease-in` | Elements leaving view |
-| `spring (bounce: 0)` | Professional interactive elements |
-| `spring (bounce > 0)` | Playful/fun contexts only |
+### Exit Animation Subtlety (Jakub)
+Exits should be subtler than enters. Use smaller fixed values, same blur.
 
 ### The Golden Rule
 > "The best animation is that which goes unnoticed."
 
-If users comment "nice animation!" on every interaction, it's probably too prominent.
+If users comment "nice animation!" on every interaction, it's probably too prominent for production. (Exception: kids apps and playful contexts where delight IS the goal.)
 
-## Supporting Files
+### Accessibility is NOT Optional
+Always check for `prefers-reduced-motion` support. No exceptions. Flag if missing.
 
-### Designer References (for per-designer perspectives)
+---
+
+## Reference Files
+
+**Designer perspectives** (read for per-designer details):
 - [Emil Kowalski](emil-kowalski.md) — Restraint, frequency rules, speed, Sonner/Vaul patterns
 - [Jakub Krehel](jakub-krehel.md) — Production polish, enter/exit, shadows, optical alignment
 - [Jhey Tompkins](jhey-tompkins.md) — Playful experimentation, @property, linear(), 3D CSS
 
-### Topical References
+**Topical references**:
 - [Philosophy](philosophy.md) — Comparing all three mindsets, when to apply each
 - [Technical Principles](technical-principles.md) — Comprehensive technical reference
 - [Accessibility](accessibility.md) — Motion sensitivity and reduced-motion support
