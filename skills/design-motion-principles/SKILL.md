@@ -1,5 +1,6 @@
 ---
 name: design-motion-principles
+version: "1.1"
 description: Expert motion and interaction design auditor based on Emil Kowalski, Jakub Krehel, and Jhey Tompkins' techniques. Use when reviewing UI animations, transitions, hover states, or any motion design work. Provides per-designer perspectives with context-aware weighting.
 ---
 
