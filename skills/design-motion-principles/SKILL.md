@@ -29,6 +29,40 @@ Check these sources:
 3. **Existing animations** — Grep for `motion`, `animate`, `transition`, `@keyframes`. What durations are used? What patterns exist?
 4. **Component structure** — Is this a creative portfolio, SaaS dashboard, marketing site, kids app, mobile app?
 
+### Motion Gap Analysis (CRITICAL - Don't Skip)
+
+After finding existing animations, actively search for **missing** animations. These are UI changes that happen without any transition:
+
+**Search for conditional renders without AnimatePresence:**
+```bash
+# Find conditional renders: {condition && <Component />}
+grep -n "&&\s*(" --include="*.tsx" --include="*.jsx" -r .
+
+# Find ternary UI swaps: {condition ? <A /> : <B />}
+grep -n "?\s*<" --include="*.tsx" --include="*.jsx" -r .
+```
+
+**For each conditional render found, check:**
+- Is it wrapped in `<AnimatePresence>`?
+- Does the component inside have enter/exit animations?
+- If NO to both → this is a **motion gap** that needs fixing
+
+**Common motion gap patterns:**
+- `{isOpen && <Modal />}` — Modal appears/disappears instantly
+- `{mode === "a" && <ControlsA />}` — Controls swap without transition
+- `{isLoading ? <Spinner /> : <Content />}` — Loading state snaps
+- `style={{ height: isExpanded ? 200 : 0 }}` — Height changes without CSS transition
+- Inline styles with dynamic values but no `transition` property
+
+**Where to look for motion gaps:**
+- Inspector/settings panels with mode switches
+- Conditional form fields
+- Tab content areas
+- Expandable/collapsible sections
+- Toast/notification systems
+- Loading states
+- Error states
+
 ### State Your Inference
 
 After gathering context, tell the user what you found and propose a weighting:
@@ -39,6 +73,9 @@ After gathering context, tell the user what you found and propose a weighting:
 **Project type**: [What you inferred — e.g., "Kids educational app, mobile-first PWA"]
 **Existing animation style**: [What you observed — e.g., "Spring animations (500-600ms), framer-motion, active:scale patterns"]
 **Likely intent**: [Your inference — e.g., "Delight and engagement for young children"]
+
+**Motion gaps found**: [Number] conditional renders without AnimatePresence
+- [List the files/areas with gaps, e.g., "Settings panel mode switches", "Loading states"]
 
 **Proposed perspective weighting**:
 - **Primary**: [Designer] — [Why]
@@ -141,6 +178,8 @@ Use decorated headers and grouped findings for each designer:
 **What to Check:**
 - Enter animations (opacity + translateY + blur?)
 - Exit animations (subtler than enters? Or missing entirely?)
+- **Motion gaps** — Conditional renders without AnimatePresence (from gap analysis)
+- **Layout transitions** — Size/position changes that snap instead of animate
 - Shadow vs border usage on varied backgrounds
 - Optical alignment (buttons with icons, play buttons)
 - Hover state transitions (150-200ms minimum)
@@ -258,14 +297,14 @@ Always check for `prefers-reduced-motion` support. No exceptions. Flag if missin
 ## Reference Files
 
 **Designer perspectives** (read for per-designer details):
-- [Emil Kowalski](emil-kowalski.md) — Restraint, frequency rules, speed, Sonner/Vaul patterns
-- [Jakub Krehel](jakub-krehel.md) — Production polish, enter/exit, shadows, optical alignment
-- [Jhey Tompkins](jhey-tompkins.md) — Playful experimentation, @property, linear(), 3D CSS
+- [Emil Kowalski](references/emil-kowalski.md) — Restraint, frequency rules, speed, Sonner/Vaul patterns
+- [Jakub Krehel](references/jakub-krehel.md) — Production polish, enter/exit, shadows, optical alignment
+- [Jhey Tompkins](references/jhey-tompkins.md) — Playful experimentation, @property, linear(), 3D CSS
 
 **Topical references**:
-- [Philosophy](philosophy.md) — Comparing all three mindsets, when to apply each
-- [Technical Principles](technical-principles.md) — Comprehensive technical reference
-- [Accessibility](accessibility.md) — Motion sensitivity and reduced-motion support
-- [Performance](performance.md) — GPU acceleration and optimization
-- [Common Mistakes](common-mistakes.md) — What to avoid
+- [Philosophy](references/philosophy.md) — Comparing all three mindsets, when to apply each
+- [Technical Principles](references/technical-principles.md) — Comprehensive technical reference
+- [Accessibility](references/accessibility.md) — Motion sensitivity and reduced-motion support
+- [Performance](references/performance.md) — GPU acceleration and optimization
+- [Common Mistakes](references/common-mistakes.md) — What to avoid
 - [Audit Checklist](audit-checklist.md) — Systematic review checklist

@@ -17,6 +17,21 @@ Use this checklist when reviewing motion design in any UI code.
 
 ---
 
+## Motion Gap Analysis (Check BEFORE Reviewing Existing Animations)
+
+Conditional UI changes that **lack** animation are often worse than poorly-tuned animations:
+
+- [ ] **Searched for conditional renders** — `{condition && <Component />}` patterns
+- [ ] **Searched for ternary swaps** — `{condition ? <A /> : <B />}` patterns
+- [ ] **Searched for dynamic inline styles** — `style={{ prop: dynamicValue }}` without transition
+- [ ] **Each conditional render** either has AnimatePresence wrapper OR doesn't need animation (static content)
+- [ ] **Mode switches** (tabs, toggles) animate their content changes, not just the switch itself
+- [ ] **Settings panels** with conditional controls have enter/exit animations
+- [ ] **Expandable sections** animate height, not just show/hide
+- [ ] **Loading → Content** transitions are smooth, not instant swaps
+
+---
+
 ## Enter/Exit States
 
 - [ ] Enter animations combine opacity + translateY + blur
@@ -100,6 +115,7 @@ Use this checklist when reviewing motion design in any UI code.
 - Missing `prefers-reduced-motion` support
 - Animating layout properties (width, height, top, left)
 - No exit animations (elements just disappear)
+- **Motion gaps in primary UI** — Conditional controls/panels that snap in/out without animation
 - Animating keyboard-initiated actions (Emil)
 - Animations on high-frequency actions (100s/day)
 
