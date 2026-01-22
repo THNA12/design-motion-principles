@@ -5,7 +5,7 @@ Expert motion and interaction design auditor based on **Emil Kowalski**, **Jakub
 ## Installation
 
 ```bash
-npx add-skill kylezantos/design-engineer-auditor-package
+npx add-skill kylezantos/design-motion-principles
 ```
 
 Works with Claude Code, Cursor, Windsurf, and other AI coding assistants.
@@ -84,13 +84,13 @@ If you prefer not to use `npx add-skill`:
 
 **Global (all projects):**
 ```bash
-git clone https://github.com/kylezantos/design-engineer-auditor-package.git
-cp -r design-engineer-auditor-package/skills/design-motion-principles ~/.claude/skills/
+git clone https://github.com/kylezantos/design-motion-principles.git
+cp -r design-motion-principles/skills/design-motion-principles ~/.claude/skills/
 ```
 
 **For Cursor:**
 ```bash
-cp -r design-engineer-auditor-package/skills/design-motion-principles ~/.cursor/skills/
+cp -r design-motion-principles/skills/design-motion-principles ~/.cursor/skills/
 ```
 
 ## Credits
