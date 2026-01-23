@@ -96,10 +96,22 @@ If they adjust (e.g., "prioritize delight and engagement"), update your weightin
 
 ## STEP 2: Full Audit (After User Confirms)
 
-Once the user confirms, perform the complete audit. Read the reference files for detailed guidance:
-- `emil-kowalski.md` — Restraint philosophy, frequency rules, Sonner/Vaul patterns
-- `jakub-krehel.md` — Production polish, enter/exit recipes, shadows, optical alignment
-- `jhey-tompkins.md` — Playful experimentation, @property, linear(), scroll-driven
+Once the user confirms, perform the complete audit by reading the reference files in this order:
+
+### 2a. Read the Audit Checklist First
+**Read `audit-checklist.md`** — Use this as your systematic guide. It provides the structured checklist of what to evaluate.
+
+### 2b. Read Designer Files for Your Weighted Perspectives
+Based on your context weighting, read the relevant designer files:
+- **Read `references/emil-kowalski.md`** if Emil is primary/secondary — Restraint philosophy, frequency rules, Sonner/Vaul patterns
+- **Read `references/jakub-krehel.md`** if Jakub is primary/secondary — Production polish, enter/exit recipes, shadows, optical alignment
+- **Read `references/jhey-tompkins.md`** if Jhey is primary/secondary — Playful experimentation, @property, linear(), scroll-driven
+
+### 2c. Read Topical References as Needed
+- **Read `references/accessibility.md`** — MANDATORY. Always check for prefers-reduced-motion. No exceptions.
+- **Read `references/common-mistakes.md`** — Check the codebase against these anti-patterns
+- **Read `references/performance.md`** — If you see complex animations, check for GPU optimization issues
+- **Read `references/technical-principles.md`** — Reference when making specific implementation recommendations
 
 ### Context-to-Perspective Mapping
 
@@ -295,17 +307,21 @@ Always check for `prefers-reduced-motion` support. No exceptions. Flag if missin
 
 ---
 
-## Reference Files
+## Reference Files (When to Read Each)
 
-**Designer perspectives** (read for per-designer details):
-- [Emil Kowalski](references/emil-kowalski.md) — Restraint, frequency rules, speed, Sonner/Vaul patterns
-- [Jakub Krehel](references/jakub-krehel.md) — Production polish, enter/exit, shadows, optical alignment
-- [Jhey Tompkins](references/jhey-tompkins.md) — Playful experimentation, @property, linear(), 3D CSS
+**STEP 2a — Read first:**
+- [Audit Checklist](audit-checklist.md) — Your systematic guide for the full audit
 
-**Topical references**:
-- [Philosophy](references/philosophy.md) — Comparing all three mindsets, when to apply each
-- [Technical Principles](references/technical-principles.md) — Comprehensive technical reference
-- [Accessibility](references/accessibility.md) — Motion sensitivity and reduced-motion support
-- [Performance](references/performance.md) — GPU acceleration and optimization
-- [Common Mistakes](references/common-mistakes.md) — What to avoid
-- [Audit Checklist](audit-checklist.md) — Systematic review checklist
+**STEP 2b — Read based on context weighting:**
+- [Emil Kowalski](references/emil-kowalski.md) — If Emil is primary/secondary
+- [Jakub Krehel](references/jakub-krehel.md) — If Jakub is primary/secondary
+- [Jhey Tompkins](references/jhey-tompkins.md) — If Jhey is primary/secondary
+
+**STEP 2c — Read as needed:**
+- [Accessibility](references/accessibility.md) — MANDATORY for every audit (prefers-reduced-motion)
+- [Common Mistakes](references/common-mistakes.md) — Check codebase against anti-patterns
+- [Performance](references/performance.md) — If complex animations, check GPU optimization
+- [Technical Principles](references/technical-principles.md) — For implementation recommendations
+
+**Optional context (if uncertain about weighting):**
+- [Philosophy](references/philosophy.md) — Compare all three mindsets to refine weighting
